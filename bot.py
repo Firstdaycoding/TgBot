@@ -35,7 +35,7 @@ class Project(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     status = Column(String(20), default=Status.NotStarted.value)
-    Timestamp = Column(Integer, default=datetime.now(timezone.utc).timestamp())
+    timestamp = Column(Integer, default=lambda: int(datetime.now(timezone.utc).timestamp()))
 
 async def button_handler(update: Update, context : ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
