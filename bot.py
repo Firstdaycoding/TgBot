@@ -1,4 +1,3 @@
-from os import name
 import os
 from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
@@ -287,14 +286,17 @@ Base.metadata.create_all(engine)
 PORT = int(os.getenv('PORT', 8443))
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
-if not WEBHOOK_URL:
-    print("❌ ERROR: WEBHOOK_URL environment variable is missing!")
-else:
+try:
+    print("Starting bot...")
+    
     app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
-        url_path="/telegram_webhook",
-        secret_token= os.getenv("SECRET"),
-        webhook_url=f"{WEBHOOK_URL}/telegram_webhook"
+        url_path="telegram_webhook",
+        webhook_url=f"{WEBHOOK_URL}/telegram_webhook",
+        secret_token=os.getenv("SECRET")
     )
+
+except Exception as e:
+    print("ERROR:", e)
 
