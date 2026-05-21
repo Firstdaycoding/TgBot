@@ -284,7 +284,7 @@ app.add_handler(CommandHandler("help", help))
 print("Bot Running...")
 
 Base.metadata.create_all(engine)
-PORT = os.getenv('PORT', 8443)
+PORT = int(os.getenv('PORT', 8443))
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
 if not WEBHOOK_URL:
