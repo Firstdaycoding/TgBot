@@ -1,4 +1,5 @@
 import os
+import asyncio
 from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
@@ -286,10 +287,11 @@ Base.metadata.create_all(engine)
 PORT = int(os.getenv('PORT', 8443))
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
-try:
+
+async def main():
     print("Starting bot...")
-    
-    app.run_webhook(
+
+    await app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
         url_path="telegram_webhook",
@@ -297,6 +299,9 @@ try:
         secret_token=os.getenv("SECRET")
     )
 
-except Exception as e:
-    print("ERROR:", e)
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        print("ERROR:", e)
 
