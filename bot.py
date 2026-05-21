@@ -286,11 +286,13 @@ Base.metadata.create_all(engine)
 PORT = int(os.getenv('PORT', 8443))
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
-
-app.run_webhook(
-    listen="0.0.0.0",
-    port=PORT,
-    url_path="telegram_webhook",
-    webhook_url=f"{WEBHOOK_URL}/telegram_webhook",
-    secret_token=os.getenv("SECRET")
-)
+try:
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=PORT,
+        url_path="telegram_webhook",
+        webhook_url=f"{WEBHOOK_URL}/telegram_webhook",
+        secret_token=os.getenv("SECRET")
+    )
+except Exception as e:
+    print(f"Error starting webhook: {e}")
