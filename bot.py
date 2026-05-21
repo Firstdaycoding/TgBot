@@ -248,7 +248,7 @@ async def delete(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
     project_id = context.args[0]
-    project = db.query(Project).filter_by(id=project_id).first()
+    project = db.query(Project).filter_by(id=int(project_id)).first()
     if not project:
         await update.message.reply_text("Project not found.")
         return
@@ -293,6 +293,7 @@ else:
     app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
+        url_path="/telegram_webhook",
         secret_token= os.getenv("SECRET"),
         webhook_url=f"{WEBHOOK_URL}/telegram_webhook"
     )
