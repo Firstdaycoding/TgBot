@@ -291,8 +291,7 @@ try:
         listen="0.0.0.0",
         port=PORT,
         url_path="telegram_webhook",
-        webhook_url=f"{WEBHOOK_URL}/telegram_webhook",
-        secret_token=os.getenv("SECRET")
+        webhook_url= None
     )
 except Exception as e:
     print(f"Error starting webhook: {e}")
