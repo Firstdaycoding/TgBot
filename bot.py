@@ -206,7 +206,7 @@ async def projects(update: Update, context: ContextTypes.DEFAULT_TYPE):
             status_lower = proj.status.lower() if proj.status else ""
             if status_lower == "completed":
                 emoji = "🟢"
-            elif status_lower == "ongoing":
+            elif status_lower == "active":
                 emoji = "🔵"
             elif status_lower == "paused":
                 emoji = "⏸️"
@@ -283,15 +283,20 @@ app.add_handler(CommandHandler("help", help))
 print("Bot Running...")
 
 Base.metadata.create_all(engine)
-PORT = int(os.getenv('PORT', 8443))
-WEBHOOK_URL = os.getenv('WEBHOOK_URL')
+
+PORT = int(os.getenv("PORT", 8443))
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+
+print("TOKEN:", TOKEN)
+print("WEBHOOK_URL:", WEBHOOK_URL)
+print("PORT:", PORT)
 
 try:
     app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
         url_path="telegram_webhook",
-        webhook_url= None
+        webhook_url=f"{WEBHOOK_URL}/telegram_webhook"
     )
 except Exception as e:
     print(f"Error starting webhook: {e}")
